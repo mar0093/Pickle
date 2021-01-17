@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbtron text-center">
+            <h1>Pickle</h1>
+            <h4> Welcome to Pickle </h4>
+            <p class="lead">Please enter an ASX ticker into the search bar to get started.</p>
+        {% if session.logged_in == NULL %}
+            <a href="/register" class="btn btn-outline-success my-2 my-sm-0" style ="background-color:#444;">Register</a>
+            <a href="/login" class="btn btn-outline-success my-2 my-sm-0" style ="background-color:#444;">Log In</a>
+        {% endif %}
+        </div>
+    </div>
+    <a href="/shares2/amp/default" class="btn btn-primary">Test</a>
+{% endblock %}

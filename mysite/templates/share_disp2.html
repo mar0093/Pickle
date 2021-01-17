@@ -1,0 +1,174 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <head>
+<style>
+.ad-left {
+  float: left;
+  margin-right: 3px;
+}
+
+.ad-right {
+  float: left;
+  margin-left: 3px;
+
+}
+
+.entire-thing {
+  width: 650px;
+  margin-bottom: 50px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 34px;
+  margin-left: 3px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ca2222;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2ab934;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(55px);
+  -ms-transform: translateX(55px);
+  transform: translateX(55px);
+}
+
+/*------ ADDED CSS ---------*/
+.on
+{
+  display: none;
+}
+
+.on, .off
+{
+  color: white;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  font-size: 10px;
+  font-family: Verdana, sans-serif;
+}
+
+input:checked+ .slider .on
+{display: block;}
+
+input:checked + .slider .off
+{display: none;}
+
+/*--------- END --------*/
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;}
+
+myDIV.original_graph { display: none; }
+
+.clear {
+clear: both;
+}
+</style>
+</head>
+    <h1>{{id}}</h1>
+    <div>
+    <small>Updated as of {{result.Date}} </small>
+    </div>
+    <large>Current Price: <a style="font-size:20px;font-weight:bold"> {{result.Close}}</a></large>
+
+    <div class="entire-thing">
+        <div class="ad-left">
+            <form action="/add_scout" method="POST"  ><button  class="btn btn-success" type="submit" name="add" value="{{  id  }}" > + Scout</button> </form>
+        </div>
+        <div>
+            <label class="switch">
+            <input type="checkbox" id="togBtn" onclick="myFunction()">Click Me</button>
+            <div class="slider round">
+                <!--ADDED HTML -->
+                <span class="on">AI</span>
+                <span class="off">AI</span>
+                <!--END-->
+            </div>
+            </label>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div style="width:1230px;height:50px;border:6px outset #444;background:#444;">
+
+    <a href="/shares2/{{id}}/default" class="btn btn-primary" style="background-color:#444;border-color:#32CD32;">max</a>
+    <a href="/shares2/{{id}}/365" class="btn btn-primary" style="background-color:#444;border-color:#32CD32;">1y</a>
+    <a href="/shares2/{{id}}/183" class="btn btn-primary" style="background-color:#444;border-color:#32CD32;">6m</a>
+    <a href="/shares2/{{id}}/91" class="btn btn-primary" style="background-color:#444;border-color:#32CD32;">3m</a>
+    <a href="/shares2/{{id}}/30" class="btn btn-primary" style="background-color:#444;border-color:#32CD32;">1m</a>
+    <large><bold><font color="white">     Performance </font></bold></large>
+        {% if pct_change <= 0 %}
+            <font face="verdana" color="red">{{ pct_change }}%</font>
+        {% else %}
+            <font face="verdana" color="#00FF00">{{ pct_change }}%</font>
+        {% endif %}
+        <div id="myDIV" name="original_graph">
+             {{ test_var2 | safe }}
+        </div>
+        <div id="myDIV2">
+             {{ test_var | safe }}
+        </div>
+
+
+
+    </div>
+<script>
+document.getElementById("myDIV").style.display = "none";
+
+    function myFunction() {
+  var x = document.getElementById("myDIV");
+  var y = document.getElementById("myDIV2");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "none";
+  } else {
+    x.style.display = "none";
+    y.style.display = "block";
+  }
+}
+</script>
+{% endblock %}
